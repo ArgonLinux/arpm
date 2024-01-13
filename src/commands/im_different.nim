@@ -1,7 +1,7 @@
 # cutest thing I found in Portal 2 :D
 import librng, libarpm/io
 
-# This has to be a string, how unfortunate!
+# This has to be a seq, how unfortunate!
 const MESSAGES = @[
   "I'm different! D:",
   "Thank you :D",
