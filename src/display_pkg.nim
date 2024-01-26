@@ -1,5 +1,4 @@
-import libarpm/[package, io, helpers],
-       libarpm/parsers/[licenses, maintainer]
+import libarpm/[package, io, helpers], libarpm/parsers/[licenses, maintainer]
 
 proc display*(package: Package) {.inline.} =
   echo GREEN & package.name & RESET & ' ' & YELLOW & $package.version & RESET
