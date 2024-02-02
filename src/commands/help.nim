@@ -14,13 +14,13 @@ proc aliases*(aliases: openArray[string]) {.inline.} =
 
   for i, al in aliases:
     s &= GREEN & al & RESET
-    
-    if i != aliases.len-1:
+
+    if i != aliases.len - 1:
       s &= ", "
 
   echo s
 
-proc help* =
+proc help*() =
   echo """
 arpm [options] [targets]
 
@@ -57,6 +57,11 @@ List of Commands:
   usage "arpm install <package1> <package2> ..."
   bullet "Install a package if it exists."
   bullet "Packages are installed sequentially. If one of the packages fails to install due to any reason, the packages beyond it will not be installed."
+
+  header "Uninstall"
+  usage "arpm uninstall <package1> <package2> ..."
+  aliases ["remove"]
+  bullet "Uninstall a package if it exists and is installed."
 
   header "Version"
   usage "arpm version --format=<format>"

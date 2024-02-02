@@ -9,7 +9,7 @@ proc humanReadable*() =
   echo "\tcompiled at " & GREEN & CompileDate & RESET & ' ' & YELLOW & CompileTime &
     RESET
   echo "\tcompiled for " & GREEN & hostCPU & RESET
-  
+
   echo '\n'
   echo BOLD & "arpm" & RESET & " and" & BOLD & " libarpm" & RESET &
     " are developed by the Argon Linux project."

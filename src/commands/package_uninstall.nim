@@ -1,6 +1,6 @@
 import
   std/[terminal, options],
-  libarpm/[io, package, package_list, install, helpers],
+  libarpm/[io, package, package_list, uninstall, helpers],
   ../[suggest, display_pkg],
   termstyle,
   nancy
@@ -30,7 +30,7 @@ proc displayPackages*(targets: seq[string], list: PackageList, noConfirm: bool) 
       other = packages[i + 1]
 
       table.add bold package.name,
-        $package.version, "\t\t", bold other.name, $other.version
+        $package.version, "\t\t", bold other.name, redString other.version
 
       skip.add(i + 1)
     else:
@@ -41,7 +41,7 @@ proc displayPackages*(targets: seq[string], list: PackageList, noConfirm: bool) 
   if not noConfirm and ask("Do you want to proceed?", ["y", "n"]) != 0:
     error("Operation aborted.", true)
 
-proc install*(targets: seq[string], forced, noConfirm: bool) =
+proc uninstall*(targets: seq[string], forced, noConfirm: bool) =
   if targets.len < 1:
     error("No packages specified!", true)
 
@@ -55,7 +55,7 @@ proc install*(targets: seq[string], forced, noConfirm: bool) =
     if pkg.isSome:
       let package = get pkg
 
-      package.install(forced)
+      package.uninstall(forced)
     else:
       error("Package not found: " & raw)
       error(
