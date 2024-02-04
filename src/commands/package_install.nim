@@ -1,6 +1,6 @@
 import
   std/[terminal, options],
-  libarpm/[io, package, package_list, install, helpers],
+  libarpm/[io, package, package_list, install, helpers, dependencies],
   ../[suggest, display_pkg],
   termstyle,
   nancy
@@ -47,18 +47,24 @@ proc install*(targets: seq[string], forced, noConfirm: bool) =
 
   let list = packageList()
 
-  displayPackages(targets, list, noConfirm)
+  var packages: seq[Package]
 
   for raw in targets:
     let pkg = list.getPackage(raw)
+    if not pkg.isSome:
+      error("Package not found: " & raw, true)
 
-    if pkg.isSome:
-      let package = get pkg
+    let package = pkg.get()
+    packages &= solveDependencies(package)
 
-      package.install(forced)
-    else:
-      error("Package not found: " & raw)
-      error(
-        "BUG: This should never happen, because displayPackages() should quit much earlier than this stage. Report this to arpm developers!",
-        true
-      )
+    packages.add(package)
+  
+  var dpkgs: seq[string]
+
+  for pkg in packages:
+    dpkgs.add(pkg.name)
+
+  displayPackages(dpkgs, list, noConfirm)
+
+  for pkg in packages:
+    pkg.install(forced)
