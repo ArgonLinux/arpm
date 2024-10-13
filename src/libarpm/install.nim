@@ -40,8 +40,13 @@ proc install*(
   setCurrentDir(dir)
   for cmd in package.build:
     info "Executing build command: `" & cmd & '`'
-    if (let code = execCmdEx(cmd, env = environment).exitCode; code != 0):
-      error("Build command exited with non-zero exit code: " & $code & "; cannot continue.", true)
+    let code = execCmdEx(cmd, env = environment)
+
+    if (code.exitCode != 0):
+      error("Build command exited with non-zero exit code: " & $code.exitCode & "; cannot continue.")
+      error("Output: " & code.output, true)
+
+    info("Output: " & code.output)
 
   for dest, src in package.files:
     let file = dir / dest
