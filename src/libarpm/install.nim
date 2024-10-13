@@ -1,6 +1,6 @@
 import
   std/[os, options, osproc, strutils, tables, tempfiles, posix],
-  ./[io, storage, package_list, package, helpers, dependencies, downloaders],
+  ./[io, storage, package_list, package, helpers, dependencies, downloaders, env],
   zippy/ziparchives
 
 const
@@ -36,10 +36,11 @@ proc install*(
 
   let cwd = getCurrentDir()
   info "Setting current directory to `" & dir & "`"
+  let environment = inheritEnvironment()
   setCurrentDir(dir)
   for cmd in package.build:
     info "Executing build command: `" & cmd & '`'
-    if (let code = execCmd(cmd); code != 0):
+    if (let code = execCmdEx(cmd, env = environment).exitCode; code != 0):
       error("Build command exited with non-zero exit code: " & $code & "; cannot continue.", true)
 
   for dest, src in package.files:
