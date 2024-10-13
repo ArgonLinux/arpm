@@ -23,4 +23,8 @@ proc httpDownload*(url: string, dir: string, extract: bool = true) =
 
   if extract:
     info "Decompressing source"
+
+    if dirExists(dir):
+      removeDir(dir)
+
     extractAll(dir & ".zip", dir)
