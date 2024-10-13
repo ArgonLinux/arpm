@@ -1,4 +1,5 @@
-import std/[json, options], librng, libarpm/io
+import std/[json, options]
+import ../libarpm/io
 
 const NimblePkgVersion {.strdefine.} = "??? (not defined during compile time)"
 

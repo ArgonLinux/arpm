@@ -1,6 +1,6 @@
 import
   std/[terminal, options],
-  libarpm/[io, package, package_list, install, helpers, dependencies],
+  ../libarpm/[io, package, package_list, install, helpers, dependencies],
   ../[suggest, display_pkg],
   termstyle,
   nancy

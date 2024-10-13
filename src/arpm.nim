@@ -5,7 +5,7 @@ import
     package_search, repository_ls, im_different, package_install, version, help,
     package_uninstall
   ],
-  libarpm/[package_list, io]
+  ./libarpm/[package_list, io]
 
 proc main() =
   let

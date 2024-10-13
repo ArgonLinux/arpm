@@ -1,4 +1,4 @@
-import libarpm/io
+import ../libarpm/io
 
 proc bullet*(msg: string) {.inline.} =
   echo "* " & msg

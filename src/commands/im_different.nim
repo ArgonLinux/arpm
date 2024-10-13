@@ -1,10 +1,10 @@
 # cutest thing I found in Portal 2 :D
-import librng, libarpm/io
+import librng
+import ../libarpm/io
 
-# This has to be a seq, how unfortunate!
 const
   MESSAGES =
-    @[
+    [
       "I'm different! D:",
       "Thank you :D",
       "Don't make " & YELLOW & "lemonade" & RESET & '!',
@@ -16,6 +16,5 @@ const
     ]
 
 proc imDifferent*() =
-  let rng = newRng()
-
-  echo rng.choice(MESSAGES, genAlgo = rngLehmer64)
+  let rng = newRng(algo = Lehmer64)
+  echo rng.choice(MESSAGES)

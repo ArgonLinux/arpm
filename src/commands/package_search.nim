@@ -1,4 +1,5 @@
-import std/options, ../[suggest, display_pkg], libarpm/[io, package_list]
+import std/options, ../[suggest, display_pkg]
+import ../libarpm/[io, package_list]
 
 proc packageSearch*(targets: seq[string], forceSync: bool = false) =
   let list = packageList(refresh = forceSync)
