@@ -27,4 +27,5 @@ proc httpDownload*(url: string, dir: string, extract: bool = true) =
     if dirExists(dir):
       removeDir(dir)
 
-    extractAll(dir & ".zip", dir)
+    extractAll(dir & ".zip", dir & "-extracted")
+    moveDir(dir & "-extracted", dir)
