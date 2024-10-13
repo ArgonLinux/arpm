@@ -1,4 +1,5 @@
 import std/[os, osproc, options]
+import zippy/ziparchives
 import ./[helpers, io]
 
 proc gitClone*(url: string, dir: string) =
@@ -8,7 +9,7 @@ proc gitClone*(url: string, dir: string) =
     error("Git clone failed with non-zero exit code: " & $res.exitCode)
     error("Git output: " & res.output, true)
 
-proc httpDownload*(url: string, dir: string) =
+proc httpDownload*(url: string, dir: string, extract: bool = true) =
   info "Downloading file to `" & $dir & '`'
 
   let data = httpGet(url)
@@ -18,4 +19,8 @@ proc httpDownload*(url: string, dir: string) =
 
   let content = get data
   info "Fetched " & $content.len & " bytes."
-  writeFile(dir, content)
+  writeFile(dir & ".zip", content)
+
+  if extract:
+    info "Decompressing source"
+    extractAll(dir & ".zip", dir)
