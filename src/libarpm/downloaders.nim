@@ -31,6 +31,6 @@ proc httpDownload*(url: string, dir: string, extract: bool = true) =
 
     for content in walkDirRec(dir & "-extracted"):
       if fileExists(content):
-        moveFile(content, dir)
+        moveFile(content, dir / content)
       elif dirExists(content):
-        moveDir(content, dir)
+        moveDir(content, dir / content)
